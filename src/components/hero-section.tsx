@@ -1,132 +1,81 @@
-"use client"
+import React from "react";
+import { Button } from "./ui/button";
+import Image from "next/image";
+import { ArrowRight, Calendar, Sparkle } from "lucide-react";
+import Link from "next/link";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Play, Check } from "lucide-react"
-import Link from "next/link"
-
-interface HeroVariant {
-  headline: string
-  subheadline: string
-  bullets: string[]
-  ctaPrimary: string
-  ctaSecondary: string
+interface HeroSectionProps {
+  variant: number;
 }
 
-const heroVariants: HeroVariant[] = [
-  {
-    headline: "Launch Your Airline Career",
-    subheadline: "CAAP-certified training with 95% job placement rate. Graduate ready for airline cadetship.",
-    bullets: ["CAAP Certified", "95% Placement", "Modern Fleet", "Flexible Financing"],
-    ctaPrimary: "Apply Now",
-    ctaSecondary: "Book Campus Tour",
-  },
-  {
-    headline: "Become a Professional Pilot",
-    subheadline: "Transform your aviation dreams into reality with the Philippines' premier flight training academy.",
-    bullets: ["Private to Commercial", "Industry-Leading Safety", "Career Placement", "Scholarship Programs"],
-    ctaPrimary: "Start Your Journey",
-    ctaSecondary: "Download Brochure",
-  },
-  {
-    headline: "Fly with the Best",
-    subheadline: "Join hundreds of successful pilots who started their careers at APG International Aviation Academy.",
-    bullets: [
-      "20+ Years Excellence",
-      "State-of-the-Art Facilities",
-      "Airline Partnerships",
-      "International Recognition",
-    ],
-    ctaPrimary: "Apply Today",
-    ctaSecondary: "Schedule a Call",
-  },
-]
-
-export function HeroSection({ variant = 0 }: { variant?: number }) {
-  const [currentVariant, setCurrentVariant] = useState(variant)
-  const hero = heroVariants[currentVariant]
-
+const HeroSection: React.FC<HeroSectionProps> = ({ variant }) => {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden -mt-10 pt-10">
-      {/* Background Video with Overlay */}
-      <div className="absolute inset-0 -top-10 bottom-0 z-0">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
-          <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202025-09-29%20011903-HkbUNUXhcXVXk9C1PPXqdBbDRhjCui.mp4" type="video/mp4" />
-        </video>
-        {/* Gradient overlay on left half for text readability */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to right, rgba(33, 42, 54, 0.95) 0%, rgba(33, 42, 54, 0.85) 40%, rgba(10, 26, 47, 0.40) 60%, rgba(10, 26, 47, 0.20) 100%)",
-          }}
+    <div className="relative isolate overflow-hidden bg-gradient-to-br from-black to-[#1a1a1a] text-white -mt-[80px] pt-[80px]">
+      {/* Background elements */}
+      <div className="absolute inset-y-0 inset-x-0 w-full">
+        <Image
+          src="/aviation-training-aircraft-on-runway.jpg"
+          alt="APG Aircraft Fleet"
+          fill
+          priority
+          className="object-cover object-center opacity-30"
         />
       </div>
 
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black to-transparent z-10"></div>
+
+      {/* Content */}
       <div
         className="relative z-10 max-w-7xl mx-auto w-full"
-        style={{ paddingLeft: "5vw", paddingRight: "2vw", paddingTop: "80px", paddingBottom: "80px" }}
+        style={{ paddingLeft: "5vw", paddingRight: "2vw", paddingTop: "80px" }}
       >
-        <div className="max-w-[560px] py-5">
-          <h1 className="text-white mb-4 font-sans italic mt-0 font-extrabold py-2.5" style={{ fontSize: "48px", lineHeight: "1.1", fontWeight: 800 }}>
-            {hero.headline}
-          </h1>
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 py-20 md:py-32">
+          {/* Left Column - Text Content */}
+          <div className="lg:w-3/5 text-center lg:text-left">
+            <span className="inline-flex items-center rounded-full bg-blue-500/20 px-4 py-2 text-sm font-medium text-blue-300 ring-1 ring-inset ring-blue-500/20 mb-6">
+              <Sparkle className="h-4 w-4 mr-2" />
+              Your Future, Takes Flight.
+            </span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+              Pioneering Aviation Training in Southeast Asia
+            </h1>
+            <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0">
+              Join APG International and embark on a world-class journey to
+              become a certified pilot. With cutting-edge facilities,
+              experienced instructors, and a proven track record, your dreams
+              of the sky start here.
+            </p>
 
-          <p
-            className="mb-4 py-px"
-            style={{ fontSize: "18px", lineHeight: "1.5", fontWeight: 500, color: "rgba(255,255,255,0.90)" }}
-          >
-            {hero.subheadline}
-          </p>
-
-          <div className="flex flex-wrap gap-3 mb-4">
-            {hero.bullets.map((bullet, index) => (
-              <div
-                key={index}
-                className="flex items-center text-sm uppercase"
-                style={{ letterSpacing: "0.5px", color: "rgba(255,255,255,0.85)" }}
+            <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mb-12">
+              <Button
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full text-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg"
+                asChild
               >
-                <Check className="w-4 h-4 mr-2 flex-shrink-0" />
-                <span className="font-medium">{bullet}</span>
-              </div>
-            ))}
+                <Link href="/programs">
+                  Explore Programs <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                className="border-white border-2 text-white bg-transparent hover:bg-white hover:text-gray-900 font-semibold py-3 px-8 rounded-full text-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg"
+                asChild
+              >
+                <Link href="/contact">
+                  <Calendar className="mr-2 h-5 w-5" /> Book a Visit
+                </Link>
+              </Button>
+            </div>
           </div>
 
-          <div className="flex gap-3 mb-4 tracking-widest">
-            <Button
-              size="lg"
-              className="text-white border-none hover:bg-[#C62828]"
-              style={{ backgroundColor: "#E53935", borderRadius: "8px", padding: "14px 20px" }}
-              asChild
-            >
-              <Link href="/apply">{hero.ctaPrimary}</Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="text-white hover:border-white bg-transparent"
-              style={{
-                backgroundColor: "transparent",
-                border: "2px solid rgba(255,255,255,0.85)",
-                borderRadius: "8px",
-                padding: "14px 20px",
-              }}
-              asChild
-            >
-              <Link href="/contact">{hero.ctaSecondary}</Link>
-            </Button>
-          </div>
-
-          <div className="flex">
-            <Button variant="ghost" className="text-white hover:text-white/80 transition-colors group p-0" asChild>
-              <a href="https://www.youtube.com/watch?v=j1DnPrMbC2E" target="_blank" rel="noopener noreferrer">
-                <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                Watch Our Story
-              </a>
-            </Button>
+          {/* Right Column - Image/Graphic */}
+          <div className="lg:w-2/5 flex justify-center lg:justify-end">
+            {/* Placeholder for a graphic or another image if needed */}
+            {/* <Image src="/placeholder.jpg" alt="Pilot" width={500} height={300} className="rounded-lg shadow-xl" /> */}
           </div>
         </div>
       </div>
-    </section>
-  )
-}
+    </div>
+  );
+};
+
+export default HeroSection;
