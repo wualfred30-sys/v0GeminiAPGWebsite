@@ -1,364 +1,643 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Check, Download, Calendar, Phone, Mail, FileText, CreditCard, Users, Clock } from "lucide-react"
+"use client"
+
+import { useMemo, useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
+import {
+  Briefcase,
+  Calendar,
+  Download,
+  Check,
+  FileText,
+  GraduationCap,
+  Headphones,
+  Plane,
+  Upload,
+} from "lucide-react"
 
-const admissionSteps = [
-  {
-    step: 1,
-    title: "Submit Application",
-    description: "Complete online application form with required documents",
-    timeline: "1-2 days",
-    requirements: [
-      "Completed application form",
-      "High school diploma/transcript",
-      "Valid government ID",
-      "2x2 ID photos (4 pieces)",
-      "Birth certificate",
-    ],
-  },
-  {
-    step: 2,
-    title: "Document Review",
-    description: "Our admissions team reviews your application and documents",
-    timeline: "3-5 days",
-    requirements: [
-      "Academic record verification",
-      "Background check processing",
-      "Medical certificate validation",
-      "English proficiency assessment",
-    ],
-  },
-  {
-    step: 3,
-    title: "Entrance Examination",
-    description: "Take our comprehensive aviation aptitude test",
-    timeline: "1 day",
-    requirements: [
-      "Mathematics and physics test",
-      "English comprehension exam",
-      "Spatial reasoning assessment",
-      "Aviation knowledge quiz",
-    ],
-  },
-  {
-    step: 4,
-    title: "Medical Examination",
-    description: "Complete required aviation medical examination",
-    timeline: "1-2 days",
-    requirements: [
-      "Class 1 or Class 2 medical certificate",
-      "Vision and hearing tests",
-      "Cardiovascular examination",
-      "Psychological assessment",
-    ],
-  },
-  {
-    step: 5,
-    title: "Interview & Enrollment",
-    description: "Final interview and program enrollment",
-    timeline: "1 day",
-    requirements: [
-      "Personal interview with instructors",
-      "Program selection and planning",
-      "Financial arrangement discussion",
-      "Class schedule confirmation",
-    ],
-  },
-]
+import { AngledHero } from "@/components/angled-hero"
+import { CtaRibbon } from "@/components/cta-ribbon"
+import { DiagonalCard } from "@/components/diagonal-card"
+import { ProgressStepper } from "@/components/progress-stepper"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 
-const financingOptions = [
-  {
-    title: "Full Payment Discount",
-    description: "Pay the full tuition upfront and receive a 5% discount",
-    benefits: ["5% tuition discount", "Priority class scheduling", "Free additional ground school materials"],
-    icon: CreditCard,
-  },
-  {
-    title: "Installment Plans",
-    description: "Flexible monthly payment options to fit your budget",
-    benefits: ["0% interest for 6 months", "Extended 12-month plans available", "No hidden fees or charges"],
-    icon: Calendar,
-  },
-  {
-    title: "Scholarship Programs",
-    description: "Merit-based scholarships for qualified students",
-    benefits: ["Up to 30% tuition reduction", "Academic excellence awards", "Need-based assistance available"],
-    icon: Users,
-  },
-]
+type Step = 0 | 1 | 2 | 3 | 4
 
-const parentChecklist = [
-  "Research aviation career prospects and salary expectations",
-  "Understand the total investment including living expenses",
-  "Review our safety record and training standards",
-  "Visit our campus and meet with instructors",
-  "Speak with current students and recent graduates",
-  "Explore financing options and scholarship opportunities",
-  "Confirm medical requirements and associated costs",
-  "Plan for additional expenses (books, equipment, etc.)",
+const applicationSteps = [
+  {
+    title: "Personal Profile",
+    description: "Demographics & contact information",
+    icon: <FileText className="size-4" />,
+  },
+  {
+    title: "Education History",
+    description: "High school, collegiate, certifications",
+    icon: <GraduationCap className="size-4" />,
+  },
+  {
+    title: "Program Selection",
+    description: "Choose desired pathway and intake",
+    icon: <Plane className="size-4" />,
+  },
+  {
+    title: "Documents",
+    description: "Upload identification and credentials",
+    icon: <Upload className="size-4" />,
+  },
+  {
+    title: "Review & Submit",
+    description: "Confirm details and accept policies",
+    icon: <Check className="size-4" />,
+  },
 ]
 
 export default function AdmissionsPage() {
-  return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <Badge className="bg-primary text-primary-foreground px-4 py-2 text-sm font-semibold mb-4">
-              <Check className="w-4 h-4 mr-2" />
-              ADMISSIONS OPEN - LIMITED SLOTS
-            </Badge>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-serif">
-              Start Your Aviation Journey
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Join the next generation of professional pilots. Our streamlined admissions process makes it easy to begin
-              your aviation career with the Philippines' premier flight training academy.
+  const [currentStep, setCurrentStep] = useState<Step>(0)
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    dateOfBirth: "",
+    nationality: "",
+    highSchool: "",
+    highSchoolYear: "",
+    college: "",
+    degree: "",
+    graduationYear: "",
+    program: "",
+    startDate: "",
+    financing: "",
+    validID: null as File | null,
+    diploma: null as File | null,
+    medical: null as File | null,
+    termsAccepted: false,
+    privacyAccepted: false,
+  })
+
+  const stepContent = useMemo(() => {
+    switch (currentStep) {
+      case 0:
+        return (
+          <DiagonalCard title="Personal Information" accent="primary">
+            <p className="text-sm text-sky-light/85">
+              Provide your legal name and contact details as they appear on government-issued identification.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="btn-aviation-primary" asChild>
-                <Link href="/apply">Apply Now</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="#process">Learn About Process</Link>
-              </Button>
+            <div className="grid gap-4 mt-6 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="firstName">First Name *</Label>
+                <Input
+                  id="firstName"
+                  value={formData.firstName}
+                  onChange={(event) => setFormData((prev) => ({ ...prev, firstName: event.target.value }))}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastName">Last Name *</Label>
+                <Input
+                  id="lastName"
+                  value={formData.lastName}
+                  onChange={(event) => setFormData((prev) => ({ ...prev, lastName: event.target.value }))}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email Address *</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone Number *</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="+63 9XX XXX XXXX"
+                  value={formData.phone}
+                  onChange={(event) => setFormData((prev) => ({ ...prev, phone: event.target.value }))}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="dateOfBirth">Date of Birth *</Label>
+                <Input
+                  id="dateOfBirth"
+                  type="date"
+                  value={formData.dateOfBirth}
+                  onChange={(event) => setFormData((prev) => ({ ...prev, dateOfBirth: event.target.value }))}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="nationality">Nationality *</Label>
+                <Input
+                  id="nationality"
+                  placeholder="e.g., Filipino"
+                  value={formData.nationality}
+                  onChange={(event) => setFormData((prev) => ({ ...prev, nationality: event.target.value }))}
+                  required
+                />
+              </div>
             </div>
-          </div>
-
-          {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center p-6 bg-background/50 backdrop-blur-sm rounded-lg">
-              <div className="text-3xl font-bold text-primary mb-2">95%</div>
-              <div className="text-sm font-semibold text-foreground">Acceptance Rate</div>
-              <div className="text-xs text-muted-foreground">For qualified applicants</div>
-            </div>
-            <div className="text-center p-6 bg-background/50 backdrop-blur-sm rounded-lg">
-              <div className="text-3xl font-bold text-primary mb-2">2-3</div>
-              <div className="text-sm font-semibold text-foreground">Weeks Process</div>
-              <div className="text-xs text-muted-foreground">From application to enrollment</div>
-            </div>
-            <div className="text-center p-6 bg-background/50 backdrop-blur-sm rounded-lg">
-              <div className="text-3xl font-bold text-primary mb-2">₱0</div>
-              <div className="text-sm font-semibold text-foreground">Application Fee</div>
-              <div className="text-xs text-muted-foreground">No cost to apply</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Admissions Process */}
-      <section id="process" className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-serif">
-              Simple 5-Step Admissions Process
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              We've streamlined our admissions process to make it as straightforward as possible while maintaining our
-              high standards.
+          </DiagonalCard>
+        )
+      case 1:
+        return (
+          <DiagonalCard title="Educational Background" accent="secondary">
+            <p className="text-sm text-sky-light/85">
+              Admissions requires proof of secondary education. If you have collegiate experience, enter it for scholarship
+              consideration.
             </p>
-          </div>
-
-          <div className="space-y-8">
-            {admissionSteps.map((step, index) => (
-              <Card key={index} className="overflow-hidden">
-                <CardContent className="p-0">
-                  <div className="flex flex-col lg:flex-row">
-                    {/* Step Number */}
-                    <div className="lg:w-32 bg-gradient-to-br from-primary to-accent p-8 flex items-center justify-center">
-                      <div className="text-4xl font-bold text-white">{step.step}</div>
-                    </div>
-
-                    {/* Step Content */}
-                    <div className="flex-1 p-8">
-                      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
-                        <div>
-                          <h3 className="text-2xl font-bold text-foreground mb-2">{step.title}</h3>
-                          <p className="text-muted-foreground">{step.description}</p>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <Clock className="w-4 h-4 text-primary" />
-                          <span className="font-medium text-foreground">{step.timeline}</span>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {step.requirements.map((req, reqIndex) => (
-                          <div key={reqIndex} className="flex items-start gap-2">
-                            <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                            <span className="text-sm text-muted-foreground">{req}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Button size="lg" className="btn-aviation-primary" asChild>
-              <Link href="/apply">Start Your Application</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Financing Options */}
-      <section className="py-20 bg-muted">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-serif">
-              Flexible Financing Options
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              We believe financial constraints shouldn't prevent you from pursuing your aviation dreams. Choose from our
-              flexible payment options.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {financingOptions.map((option, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardHeader className="text-center pb-4">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
-                    <option.icon className="w-8 h-8 text-primary" />
-                  </div>
-                  <CardTitle className="text-xl font-bold text-foreground">{option.title}</CardTitle>
-                  <CardDescription className="text-muted-foreground">{option.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {option.benefits.map((benefit, benefitIndex) => (
-                      <li key={benefitIndex} className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-muted-foreground">{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Card className="max-w-2xl mx-auto">
-              <CardContent className="p-8">
-                <h3 className="text-xl font-bold text-foreground mb-4">Need Financial Assistance?</h3>
-                <p className="text-muted-foreground mb-6">
-                  Our financial aid counselors are here to help you find the best payment option for your situation.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button variant="outline" asChild>
-                    <Link href="/contact">
-                      <Phone className="w-4 h-4 mr-2" />
-                      Schedule Consultation
-                    </Link>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <Link href="#brochure">
-                      <Download className="w-4 h-4 mr-2" />
-                      Download Financial Guide
-                    </Link>
-                  </Button>
+            <div className="mt-6 space-y-6">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="highSchool">High School *</Label>
+                  <Input
+                    id="highSchool"
+                    value={formData.highSchool}
+                    onChange={(event) => setFormData((prev) => ({ ...prev, highSchool: event.target.value }))}
+                    required
+                  />
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Parent Checklist */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 font-serif">
-                Parent & Sponsor Checklist
-              </h2>
-              <p className="text-xl text-muted-foreground mb-8">
-                We understand that choosing an aviation academy is a significant decision for families. Here's a
-                comprehensive checklist to help you make an informed choice.
-              </p>
-
-              <div className="space-y-4">
-                {parentChecklist.map((item, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                    <span className="text-muted-foreground">{item}</span>
-                  </div>
-                ))}
+                <div className="space-y-2">
+                  <Label htmlFor="highSchoolYear">Graduation Year *</Label>
+                  <Input
+                    id="highSchoolYear"
+                    type="number"
+                    placeholder="2020"
+                    value={formData.highSchoolYear}
+                    onChange={(event) => setFormData((prev) => ({ ...prev, highSchoolYear: event.target.value }))}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="college">College / University (optional)</Label>
+                  <Input
+                    id="college"
+                    value={formData.college}
+                    onChange={(event) => setFormData((prev) => ({ ...prev, college: event.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="degree">Degree / Course</Label>
+                  <Input
+                    id="degree"
+                    value={formData.degree}
+                    onChange={(event) => setFormData((prev) => ({ ...prev, degree: event.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2 md:col-span-2 md:max-w-sm">
+                  <Label htmlFor="graduationYear">Graduation Year (or Expected)</Label>
+                  <Input
+                    id="graduationYear"
+                    type="number"
+                    placeholder="2024"
+                    value={formData.graduationYear}
+                    onChange={(event) => setFormData((prev) => ({ ...prev, graduationYear: event.target.value }))}
+                  />
+                </div>
+              </div>
+            </div>
+          </DiagonalCard>
+        )
+      case 2:
+        return (
+          <DiagonalCard title="Program Selection" accent="accent">
+            <p className="text-sm text-sky-light/85">
+              Select the pathway that matches your current credentials and long-term aviation goals.
+            </p>
+            <div className="mt-6 space-y-5">
+              <div className="space-y-2">
+                <Label htmlFor="program">Training Program *</Label>
+                <Select
+                  value={formData.program}
+                  onValueChange={(value) => setFormData((prev) => ({ ...prev, program: value }))}
+                  required
+                >
+                  <SelectTrigger id="program">
+                    <SelectValue placeholder="Select a program" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="ppl">Private Pilot License (PPL)</SelectItem>
+                    <SelectItem value="cpl">Commercial Pilot License (CPL)</SelectItem>
+                    <SelectItem value="airline">Airline Preparation Program</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="startDate">Preferred Start Date *</Label>
+                  <Select
+                    value={formData.startDate}
+                    onValueChange={(value) => setFormData((prev) => ({ ...prev, startDate: value }))}
+                  >
+                    <SelectTrigger id="startDate">
+                      <SelectValue placeholder="Select intake" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="march-2025">March 2025 Intake</SelectItem>
+                      <SelectItem value="june-2025">June 2025 Intake</SelectItem>
+                      <SelectItem value="september-2025">September 2025 Intake</SelectItem>
+                      <SelectItem value="december-2025">December 2025 Intake</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="financing">Financing Preference *</Label>
+                  <Select
+                    value={formData.financing}
+                    onValueChange={(value) => setFormData((prev) => ({ ...prev, financing: value }))}
+                  >
+                    <SelectTrigger id="financing">
+                      <SelectValue placeholder="Select option" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="full">Full Payment (5% discount)</SelectItem>
+                      <SelectItem value="installment">Monthly Installment Plan</SelectItem>
+                      <SelectItem value="scholarship">Scholarship Application</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+          </DiagonalCard>
+        )
+      case 3:
+        return (
+          <DiagonalCard title="Upload Documents" accent="neutral">
+            <p className="text-sm text-sky-light/85">
+              Upload crisp scans or photos (PDF/JPG, max 5&nbsp;MB each). You can return later to update optional files.
+            </p>
+            <div className="mt-6 space-y-5">
+              <div className="space-y-2">
+                <Label htmlFor="validID">Valid Government ID *</Label>
+                <Input
+                  id="validID"
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  onChange={(event) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      validID: event.target.files?.[0] ?? null,
+                    }))
+                  }
+                  required
+                />
+                <p className="text-xs text-sky-light/65">
+                  Accepted: Passport, Driver's License, or National ID.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="diploma">High School Diploma / Transcript *</Label>
+                <Input
+                  id="diploma"
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  onChange={(event) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      diploma: event.target.files?.[0] ?? null,
+                    }))
+                  }
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="medical">Medical Certificate (optional)</Label>
+                <Input
+                  id="medical"
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  onChange={(event) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      medical: event.target.files?.[0] ?? null,
+                    }))
+                  }
+                />
+                <p className="text-xs text-sky-light/65">
+                  Submit a CAAP-accredited Class&nbsp;1 or Class&nbsp;2 medical assessment. If pending, you may upload later.
+                </p>
+              </div>
+            </div>
+          </DiagonalCard>
+        )
+      case 4:
+        return (
+          <DiagonalCard title="Review & Submit" accent="primary">
+            <p className="text-sm text-sky-light/85">
+              Confirm your entries and acknowledge the enrollment policies before submitting. You will receive a confirmation
+              email within minutes.
+            </p>
+            <div className="mt-6 grid gap-4 text-sm text-sky-light/90 md:grid-cols-2">
+              <div>
+                <p className="text-xs uppercase tracking-[0.12em] text-white/60">Applicant</p>
+                <p className="font-semibold text-white">
+                  {formData.firstName || "—"} {formData.lastName || ""}
+                </p>
+                <p>{formData.email || "—"}</p>
+                <p>{formData.phone || "—"}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.12em] text-white/60">Selected Path</p>
+                <p className="font-semibold text-white">{programLabel(formData.program)}</p>
+                <p>{startDateLabel(formData.startDate)}</p>
+                <p>{financingLabel(formData.financing)}</p>
               </div>
             </div>
 
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Download className="w-5 h-5 text-primary" />
-                    Download Resources
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
-                    <Link href="#brochure">
-                      <FileText className="w-4 h-4 mr-2" />
-                      Complete Program Brochure
-                    </Link>
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
-                    <Link href="#financial-guide">
-                      <CreditCard className="w-4 h-4 mr-2" />
-                      Financial Planning Guide
-                    </Link>
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
-                    <Link href="#career-guide">
-                      <Users className="w-4 h-4 mr-2" />
-                      Aviation Career Guide
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
+            <div className="mt-6 space-y-4">
+              <div className="flex items-start gap-3">
+                <Checkbox
+                  id="terms"
+                  checked={formData.termsAccepted}
+                  onCheckedChange={(checked) =>
+                    setFormData((prev) => ({ ...prev, termsAccepted: Boolean(checked) }))
+                  }
+                  required
+                />
+                <Label htmlFor="terms" className="text-sm leading-relaxed text-sky-light/85">
+                  I agree to the Terms & Conditions and understand the program requirements, tuition, and refund policies.
+                </Label>
+              </div>
+              <div className="flex items-start gap-3">
+                <Checkbox
+                  id="privacy"
+                  checked={formData.privacyAccepted}
+                  onCheckedChange={(checked) =>
+                    setFormData((prev) => ({ ...prev, privacyAccepted: Boolean(checked) }))
+                  }
+                  required
+                />
+                <Label htmlFor="privacy" className="text-sm leading-relaxed text-sky-light/85">
+                  I consent to the collection and processing of my personal data as outlined in the Privacy Policy.
+                </Label>
+              </div>
+            </div>
+          </DiagonalCard>
+        )
+      default:
+        return null
+    }
+  }, [currentStep, formData])
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Phone className="w-5 h-5 text-primary" />
-                    Speak with Our Team
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-4 h-4 text-primary" />
-                    <div>
-                      <div className="font-medium text-foreground">Admissions Hotline</div>
-                      <div className="text-sm text-muted-foreground">+63 2 8123 4567</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Mail className="w-4 h-4 text-primary" />
-                    <div>
-                      <div className="font-medium text-foreground">Email Support</div>
-                      <div className="text-sm text-muted-foreground">admissions@apgaviation.ph</div>
-                    </div>
-                  </div>
-                  <Button className="w-full btn-aviation-secondary" asChild>
-                    <Link href="/contact">
-                      <Calendar className="w-4 h-4 mr-2" />
-                      Schedule Campus Visit
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
+  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 4) as Step)
+  const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0) as Step)
+
+  return (
+    <div className="space-y-16 pb-24">
+      <AngledHero
+        eyebrow={{
+          label: "Admissions",
+          icon: <GraduationCap className="size-4" />,
+        }}
+        title="Apply to APG International"
+        description="Chart your aviation career with a guided five-step admissions experience. Our team is ready to help you at every checkpoint."
+        primaryAction={{
+          label: "Talk to Admissions",
+          href: "/contact",
+          icon: <Headphones className="size-4" />,
+        }}
+        secondaryAction={{
+          label: "Download Requirements",
+          href: "/docs/APG-Admissions-Checklist.pdf",
+          variant: "outline",
+          icon: <Download className="size-4" />,
+        }}
+        media={
+          <div className="relative h-full w-full overflow-hidden rounded-[1.6rem]">
+            <div className="absolute inset-0 bg-gradient-to-tr from-aviation-red/60 to-transparent" />
+            <Image
+              src="/aviation-training-aircraft-on-runway.jpg"
+              alt="Students preparing for flight training"
+              width={520}
+              height={380}
+              className="h-full w-full object-cover"
+              priority
+            />
+          </div>
+        }
+      >
+        <div className="text-sm text-sky-light/80">
+          <p>
+            Admissions decisions are typically released within five business days. Successful applicants receive onboarding
+            materials, simulator orientation schedules, and visa assistance (for international students) immediately after
+            confirmation.
+          </p>
+        </div>
+      </AngledHero>
+
+      <section className="mx-auto w-full max-w-5xl space-y-10 px-6 sm:px-8">
+        <ProgressStepper steps={applicationSteps} currentIndex={currentStep} />
+
+        <Card className="border-white/10 bg-slate-navy/75 text-white shadow-card-lift">
+          <CardHeader className="space-y-2">
+            <CardTitle className="font-serif text-2xl">
+              {applicationSteps[currentStep]?.title ?? "Application Step"}
+            </CardTitle>
+            <CardDescription className="text-sky-light/80">
+              {applicationSteps[currentStep]?.description}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-8">{stepContent}</CardContent>
+          <CardFooter className="flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:justify-between">
+            <Button variant="outline" onClick={prevStep} disabled={currentStep === 0} className="sm:w-auto">
+              Back
+            </Button>
+            {currentStep < applicationSteps.length - 1 ? (
+              <Button onClick={nextStep} className="sm:w-auto">
+                Continue
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                className="sm:w-auto"
+                disabled={!formData.termsAccepted || !formData.privacyAccepted}
+              >
+                Submit Application
+              </Button>
+            )}
+          </CardFooter>
+        </Card>
+      </section>
+
+      <section className="mx-auto grid w-full max-w-6xl gap-6 px-6 sm:px-8 lg:grid-cols-2">
+        <DiagonalCard
+          title="Admissions Requirements Checklist"
+          accent="secondary"
+          footer={
+            <div className="flex flex-col gap-2 text-sm text-sky-light/80">
+              <p>Submit digital copies or bring originals during campus visit.</p>
+              <Link href="/docs/APG-Admissions-Checklist.pdf" className="inline-flex items-center gap-2 text-white underline">
+                <Download className="size-4" />
+                Download checklist PDF
+              </Link>
+            </div>
+          }
+        >
+          <ul className="space-y-2 text-sm text-sky-light/90">
+            {[
+              "Valid government-issued identification",
+              "High school diploma / transcript (certified copy)",
+              "Birth certificate and proof of address",
+              "Medical certificate (Class 1 or Class 2 — can follow-up)",
+              "2x2 ID photos (3 pieces)",
+              "NBI or police clearance (within last 6 months)",
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <Check className="mt-1 size-4 text-accent-gold" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </DiagonalCard>
+
+        <DiagonalCard title="Key Dates & Support" accent="accent">
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm shadow-card-soft">
+              <Calendar className="size-5 text-aviation-red" />
+              <div>
+                <p className="font-semibold text-white">Rolling Intakes</p>
+                <p className="text-sky-light/80">
+                  March, June, September, and December cohorts. Submit early to secure preferred aircraft schedule.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm shadow-card-soft">
+              <Headphones className="size-5 text-aviation-red" />
+              <div>
+                <p className="font-semibold text-white">Admissions Hotline</p>
+                <p className="text-sky-light/80">
+                  +63&nbsp;(02)&nbsp;1234&nbsp;5678 • admissions@atpflightacademy.ph
+                </p>
+                <p className="text-sky-light/80">Weekdays 08:00–18:00 PHT</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm shadow-card-soft">
+              <Briefcase className="size-5 text-aviation-red" />
+              <div>
+                <p className="font-semibold text-white">Financing & Scholarships</p>
+                <p className="text-sky-light/80">
+                  Flexible monthly plans, industry scholarships, and sponsor support available upon request.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </DiagonalCard>
       </section>
+
+      <section className="mx-auto w-full max-w-6xl space-y-8 px-6 sm:px-8">
+        <Card className="border-white/10 bg-white/5 text-white shadow-card-soft">
+          <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+            <CardDescription className="text-sky-light/80">
+              Top inquiries from future pilots. Reach out for anything more.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-5 text-sky-light/90">
+            {[
+              {
+                question: "How long does the review take?",
+                answer:
+                  "Complete applications are typically reviewed within 3–5 business days. You will receive a decision along with next-step instructions via email.",
+              },
+              {
+                question: "Do you accept international applicants?",
+                answer:
+                  "Yes. Our international desk supports visa processing, accommodation options, and medical scheduling. Submit your passport copy during the document stage.",
+              },
+              {
+                question: "Are scholarships available?",
+                answer:
+                  "Merit- and need-based scholarships are offered for PPL and CPL pathways, covering up to 50% of tuition. Indicate your interest in the financing step and upload academic records.",
+              },
+              {
+                question: "Can I schedule a campus tour?",
+                answer:
+                  "Absolutely. After submitting your application—or anytime beforehand—contact admissions to arrange a hangar and simulator tour.",
+              },
+            ].map((item) => (
+              <div key={item.question} className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-card-soft">
+                <p className="font-semibold text-white">{item.question}</p>
+                <p className="mt-2 text-sm">{item.answer}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </section>
+
+      <CtaRibbon
+        eyebrow="Need Guidance?"
+        title="Connect with an admissions advisor today."
+        description="We’ll help you map prerequisites, choose the ideal intake, and guide you through financing, visa support, and housing."
+        primaryAction={{
+          label: "Schedule a call",
+          href: "/contact",
+          icon: <Headphones className="size-4" />,
+        }}
+        secondaryAction={{
+          label: "Email admissions@atpflightacademy.ph",
+          href: "mailto:admissions@atpflightacademy.ph",
+          variant: "outline",
+        }}
+        className="mx-auto max-w-5xl px-6 sm:px-8"
+      />
     </div>
   )
+}
+
+function programLabel(value: string) {
+  switch (value) {
+    case "ppl":
+      return "Private Pilot License (PPL)"
+    case "cpl":
+      return "Commercial Pilot License (CPL)"
+    case "airline":
+      return "Airline Preparation Program"
+    default:
+      return "Program not selected"
+  }
+}
+
+function startDateLabel(value: string) {
+  switch (value) {
+    case "march-2025":
+      return "March 2025 Intake"
+    case "june-2025":
+      return "June 2025 Intake"
+    case "september-2025":
+      return "September 2025 Intake"
+    case "december-2025":
+      return "December 2025 Intake"
+    default:
+      return "Start date not selected"
+  }
+}
+
+function financingLabel(value: string) {
+  switch (value) {
+    case "full":
+      return "Full Payment (5% discount)"
+    case "installment":
+      return "Monthly installment plan"
+    case "scholarship":
+      return "Applying for scholarship"
+    default:
+      return "Financing not selected"
+  }
 }

@@ -1,9 +1,19 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Clock, Users, Award, Plane, Check, Download, Calendar } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
+import {
+  Award,
+  Calendar,
+  Check,
+  Download,
+  Plane,
+  Clock,
+  Users,
+} from "lucide-react"
+
+import { AngledHero } from "@/components/angled-hero"
+import { CtaRibbon } from "@/components/cta-ribbon"
+import { DiagonalCard } from "@/components/diagonal-card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const programs = [
   {
@@ -15,9 +25,10 @@ const programs = [
     groundHours: "120 hours",
     classSize: "12 students maximum",
     tuition: "₱850,000",
-    outcome: "Graduate ready for personal flying and foundation for commercial training",
+    outcome:
+      "Graduate ready for personal flying and foundation for commercial training",
     description:
-      "Begin your aviation journey with comprehensive training that covers all aspects of private flying. Our PPL program provides the solid foundation you need for all future aviation endeavors.",
+      "Begin your aviation journey with comprehensive training that covers every phase of private flight. Build disciplined fundamentals, gain confidence in single-engine aircraft, and prepare for the next stages of your professional career.",
     requirements: [
       "Minimum age: 17 years old",
       "High school diploma or equivalent",
@@ -37,8 +48,8 @@ const programs = [
     outcomes: [
       "Private pilot privileges for personal flying",
       "Foundation for commercial pilot training",
-      "Understanding of aviation fundamentals",
       "Confidence in single-engine aircraft operations",
+      "Understanding of aviation fundamentals",
     ],
     financing: "₱85,000/month for 10 months available",
   },
@@ -53,7 +64,7 @@ const programs = [
     tuition: "₱2,200,000",
     outcome: "Graduate ready for airline cadetship and commercial aviation careers",
     description:
-      "Advance to professional pilot status with comprehensive commercial training. This program prepares you for airline cadet programs and commercial aviation careers.",
+      "Advance to commercial readiness with rigorous flight operations, multi-engine training, and airline-focused academics. This program is designed to position graduates for cadetships and charter opportunities immediately upon completion.",
     requirements: [
       "Valid Private Pilot License",
       "Minimum age: 18 years old",
@@ -62,17 +73,16 @@ const programs = [
       "Instrument Rating (can be obtained during program)",
     ],
     curriculum: [
-      "Advanced Flight Operations",
+      "Advanced Commercial Maneuvers",
       "Multi-Engine Aircraft Systems",
       "Instrument Flight Rules (IFR)",
-      "Commercial Flight Maneuvers",
       "Crew Resource Management (CRM)",
       "Aviation Law & Regulations",
       "Airline Transport Pilot Theory",
+      "Career Readiness Workshops",
     ],
     outcomes: [
-      "Commercial pilot privileges",
-      "Multi-engine rating included",
+      "Commercial pilot privileges with multi-engine rating",
       "Instrument rating certification",
       "Airline cadet program eligibility",
       "Career placement assistance",
@@ -90,30 +100,29 @@ const programs = [
     tuition: "₱3,500,000",
     outcome: "Direct pathway to major airline cadet programs with guaranteed interviews",
     description:
-      "Our premium program designed specifically for students targeting major airline careers. Includes direct partnerships with Philippine Airlines, Cebu Pacific, and international carriers.",
+      "Our premium track prepares graduates for immediate airline cockpit entry. Train on airline procedures, simulator profiles, and interview standards alongside mentorship from active airline captains.",
     requirements: [
       "Valid Commercial Pilot License",
       "Minimum age: 21 years old",
       "Class 1 Medical Certificate",
       "500+ hours total flight time",
-      "Clean flight record",
+      "Clean flight and disciplinary record",
       "University degree preferred",
     ],
     curriculum: [
       "Airline Transport Pilot License (ATPL) Theory",
-      "Jet Aircraft Orientation",
+      "Jet Orientation & Systems",
       "Advanced Crew Resource Management",
       "Multi-Crew Cooperation (MCC)",
       "Type Rating Preparation",
-      "Airline Interview Preparation",
-      "Leadership & Communication Skills",
+      "Airline Interview & Assessment Coaching",
+      "Leadership & Communication Labs",
     ],
     outcomes: [
       "ATPL theory completion",
-      "Jet aircraft experience",
-      "Guaranteed airline interviews",
-      "Direct cadet program placement",
-      "Ongoing career mentorship",
+      "Jet aircraft simulator experience",
+      "Guaranteed airline interview pipeline",
+      "Direct cadet program placement & mentorship",
     ],
     financing: "₱292,000/month for 12 months available",
   },
@@ -121,196 +130,185 @@ const programs = [
 
 export default function ProgramsPage() {
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-primary/10 via-background to-accent/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <Badge className="bg-secondary text-secondary-foreground px-4 py-2 text-sm font-semibold mb-4">
-              <Award className="w-4 h-4 mr-2" />
-              CAAP CERTIFIED PROGRAMS
-            </Badge>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-serif">
-              Professional Pilot Training Programs
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Choose from three comprehensive training tracks designed to launch your aviation career. From private
-              pilot to airline captain, we'll guide you every step of the way.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="btn-aviation-primary" asChild>
-                <Link href="/apply">Apply Now - Limited Slots</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="#programs">
-                  <Download className="w-4 h-4 mr-2" />
-                  Download Brochure
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="space-y-16 pb-24">
+      <AngledHero
+        eyebrow={{
+          label: "CAAP CERTIFIED PROGRAMS",
+          icon: <Award className="size-4" />,
+        }}
+        title="Professional Pilot Training Programs"
+        description="Choose from three guided pathways designed to accelerate your aviation career—from first solo flight through airline cockpit readiness."
+        primaryAction={{
+          label: "Apply Now – Limited Slots",
+          href: "/apply",
+          icon: <Plane className="size-4" />,
+        }}
+        secondaryAction={{
+          label: "Download Brochure",
+          href: "#programs",
+          variant: "outline",
+          icon: <Download className="size-4" />,
+        }}
+        media={
+          <Image
+            src="/success-track-record.avif"
+            alt="ATP fleet ready for departure"
+            width={520}
+            height={380}
+            className="h-full w-full rounded-3xl object-cover"
+            priority
+          />
+        }
+      >
+        <ul className="grid gap-3 text-left text-sm text-sky-light/85 sm:grid-cols-2">
+          {[
+            "Internationally aligned curriculum with CAAP oversight.",
+            "Dedicated dispatch, simulator, and maintenance support teams.",
+            "Airline partnership network across Southeast Asia and beyond.",
+            "Flexible financing assistance and scholarship opportunities.",
+          ].map((item) => (
+            <li key={item} className="flex items-center gap-2">
+              <Check className="size-4 text-accent-gold" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </AngledHero>
 
-      {/* Programs Detail */}
-      <section id="programs" className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Tabs defaultValue="ppl" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-12">
-              <TabsTrigger value="ppl">Private Pilot</TabsTrigger>
-              <TabsTrigger value="cpl">Commercial Pilot</TabsTrigger>
-              <TabsTrigger value="airline">Airline Preparation</TabsTrigger>
-            </TabsList>
-
+      <section id="programs" className="mx-auto w-full max-w-6xl px-6 sm:px-8">
+        <Tabs defaultValue="ppl" className="w-full space-y-12">
+          <TabsList className="grid w-full grid-cols-1 gap-3 rounded-2xl bg-slate-navy/80 p-2 sm:grid-cols-3">
             {programs.map((program) => (
-              <TabsContent key={program.id} value={program.id} className="space-y-8">
-                {/* Program Overview */}
-                <Card className="overflow-hidden">
-                  <CardHeader className="bg-gradient-to-r from-primary/5 to-accent/5 pb-8">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                      <div>
-                        <CardTitle className="text-3xl font-bold text-foreground mb-2 font-serif">
-                          {program.title}
-                        </CardTitle>
-                        <CardDescription className="text-lg text-muted-foreground">{program.subtitle}</CardDescription>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-3xl font-bold text-primary mb-1">{program.tuition}</div>
-                        <div className="text-sm text-muted-foreground">{program.financing}</div>
+              <TabsTrigger
+                key={program.id}
+                value={program.id}
+                className="rounded-xl bg-transparent text-sm font-medium text-white data-[state=active]:bg-white/15 data-[state=active]:shadow-card-soft"
+              >
+                {program.title.split("(")[0].trim()}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
+          {programs.map((program) => {
+            const quickStats = [
+              {
+                label: "Duration",
+                value: program.duration,
+                icon: <Clock className="size-4 text-aviation-red" />,
+              },
+              {
+                label: "Flight Hours",
+                value: program.flightHours,
+                icon: <Plane className="size-4 text-aviation-red" />,
+              },
+              {
+                label: "Ground School",
+                value: program.groundHours,
+                icon: <Award className="size-4 text-aviation-red" />,
+              },
+              {
+                label: "Class Size",
+                value: program.classSize,
+                icon: <Users className="size-4 text-aviation-red" />,
+              },
+            ]
+
+            return (
+              <TabsContent key={program.id} value={program.id} className="space-y-10">
+                <DiagonalCard
+                  title={program.title}
+                  eyebrow={program.subtitle}
+                  icon={<Award className="size-5 text-aviation-red" />}
+                  accent="primary"
+                  className="relative"
+                >
+                  <div className="grid gap-8 lg:grid-cols-[minmax(0,2.1fr)_minmax(0,1fr)]">
+                    <div className="space-y-6">
+                      <p className="text-base leading-relaxed text-sky-light/90">{program.description}</p>
+
+                      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        {quickStats.map((stat) => (
+                          <div
+                            key={stat.label}
+                            className="flex h-full items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 shadow-card-soft"
+                          >
+                            {stat.icon}
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.12em] text-white/60">{stat.label}</p>
+                              <p className="font-semibold text-white">{stat.value}</p>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  </CardHeader>
-                  <CardContent className="p-8">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                      {/* Program Stats */}
-                      <div className="space-y-6">
-                        <h3 className="text-xl font-semibold text-foreground mb-4">Program Details</h3>
-                        <div className="space-y-4">
-                          <div className="flex items-center gap-3">
-                            <Clock className="w-5 h-5 text-primary" />
-                            <div>
-                              <div className="font-medium text-foreground">Duration</div>
-                              <div className="text-sm text-muted-foreground">{program.duration}</div>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <Plane className="w-5 h-5 text-primary" />
-                            <div>
-                              <div className="font-medium text-foreground">Flight Hours</div>
-                              <div className="text-sm text-muted-foreground">{program.flightHours}</div>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <Users className="w-5 h-5 text-primary" />
-                            <div>
-                              <div className="font-medium text-foreground">Class Size</div>
-                              <div className="text-sm text-muted-foreground">{program.classSize}</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
 
-                      {/* Description & Outcome */}
-                      <div className="lg:col-span-2 space-y-6">
-                        <div>
-                          <h3 className="text-xl font-semibold text-foreground mb-4">Program Overview</h3>
-                          <p className="text-muted-foreground mb-4">{program.description}</p>
-                          <div className="p-4 bg-secondary/10 rounded-lg border-l-4 border-secondary">
-                            <div className="flex items-start gap-2">
-                              <Award className="w-5 h-5 text-secondary mt-0.5" />
-                              <div>
-                                <div className="font-semibold text-foreground mb-1">Career Outcome:</div>
-                                <div className="text-muted-foreground">{program.outcome}</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                    <div className="flex flex-col gap-4 rounded-2xl border border-white/12 bg-white/5 p-6 text-white shadow-card-soft">
+                      <p className="text-sm uppercase tracking-[0.18em] text-white/60">Tuition & Financing</p>
+                      <p className="text-3xl font-semibold">{program.tuition}</p>
+                      <p className="text-sm text-white/75">{program.financing}</p>
+                      <div className="mt-auto flex flex-col gap-2 text-sm text-white/80">
+                        <span className="font-semibold text-white">Career Outcome</span>
+                        <p>{program.outcome}</p>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </DiagonalCard>
 
-                {/* Detailed Information */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  {/* Requirements */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Entry Requirements</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-2">
-                        {program.requirements.map((req, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                            <span className="text-sm text-muted-foreground">{req}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
+                <div className="grid gap-6 lg:grid-cols-3">
+                  <DiagonalCard title="Entry Requirements" accent="secondary">
+                    <ul className="space-y-2 text-sm text-sky-light/90">
+                      {program.requirements.map((req) => (
+                        <li key={req} className="flex items-start gap-2">
+                          <Check className="mt-1 size-4 text-accent-gold" />
+                          <span>{req}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </DiagonalCard>
 
-                  {/* Curriculum */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Curriculum Highlights</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-2">
-                        {program.curriculum.map((item, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                            <span className="text-sm text-muted-foreground">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
+                  <DiagonalCard title="Curriculum Highlights" accent="accent">
+                    <ul className="space-y-2 text-sm text-sky-light/90">
+                      {program.curriculum.map((item) => (
+                        <li key={item} className="flex items-start gap-2">
+                          <span className="mt-2 h-1.5 w-1.5 rounded-full bg-aviation-red" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </DiagonalCard>
 
-                  {/* Outcomes */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">What You'll Achieve</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-2">
-                        {program.outcomes.map((outcome, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <Award className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
-                            <span className="text-sm text-muted-foreground">{outcome}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
+                  <DiagonalCard title="What You'll Achieve" accent="primary">
+                    <ul className="space-y-2 text-sm text-sky-light/90">
+                      {program.outcomes.map((outcome) => (
+                        <li key={outcome} className="flex items-start gap-2">
+                          <Award className="mt-0.5 size-4 text-accent-gold" />
+                          <span>{outcome}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </DiagonalCard>
                 </div>
 
-                {/* CTA Section */}
-                <Card className="bg-gradient-to-r from-primary/5 to-accent/5">
-                  <CardContent className="p-8 text-center">
-                    <h3 className="text-2xl font-bold text-foreground mb-4 font-serif">
-                      Ready to Start Your Aviation Career?
-                    </h3>
-                    <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                      Limited slots available for the next intake. Apply now to secure your spot in this comprehensive
-                      training program.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                      <Button size="lg" className="btn-aviation-primary" asChild>
-                        <Link href="/apply">Apply for This Program</Link>
-                      </Button>
-                      <Button size="lg" variant="outline" asChild>
-                        <Link href="/contact">
-                          <Calendar className="w-4 h-4 mr-2" />
-                          Schedule Campus Visit
-                        </Link>
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <CtaRibbon
+                  eyebrow="Ready for takeoff?"
+                  title="Secure your seat in our next intake."
+                  description="Demand is high and cohorts are intentionally small. Submit your application or schedule a campus visit to experience our fleet firsthand."
+                  primaryAction={{
+                    label: "Apply for this program",
+                    href: "/apply",
+                    icon: <Plane className="size-4" />,
+                  }}
+                  secondaryAction={{
+                    label: "Schedule campus visit",
+                    href: "/contact",
+                    variant: "outline",
+                    icon: <Calendar className="size-4" />,
+                  }}
+                />
               </TabsContent>
-            ))}
-          </Tabs>
-        </div>
+            )
+          })}
+        </Tabs>
       </section>
     </div>
   )
