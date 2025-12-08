@@ -1,12 +1,11 @@
 import type { Config } from "tailwindcss";
-import tailwindcssAnimate from "tailwindcss-animate";
 
 const config: Config = {
     darkMode: "class",
     content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -61,6 +60,24 @@ const config: Config = {
         'sky-light': '#F8FAFC',
         'runway-gray': '#1E293B',
         'alt-muted': '#64748B',
+        
+        // Chronicle HQ grayscale system
+        'solid-1': '#050505',
+        'solid-2': '#151515',
+        'solid-3': '#212121',
+        'solid-4': '#292929',
+        'solid-5': '#2f2f2f',
+        'solid-6': '#3a3a3a',
+        'solid-7': '#484848',
+        'solid-8': '#606060',
+        'solid-9': '#666666',
+        'solid-10': '#a3a3a3',
+        'solid-11': '#b3b3b3',
+        'solid-12': '#f3f3f3',
+      },
+      letterSpacing: {
+        'tight': '-0.02em',
+        'tighter': '-0.04em',
       },
       spacing: {
         18: '4.5rem',
@@ -79,6 +96,6 @@ const config: Config = {
       }
     }
   },
-  plugins: [tailwindcssAnimate],
+  plugins: [],
 };
 export default config;

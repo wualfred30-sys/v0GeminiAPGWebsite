@@ -1,0 +1,74 @@
+{
+  "summary": {
+    "startTime": "2025-10-08T08:56:46.178Z",
+    "endTime": "2025-10-08T08:56:46.224Z",
+    "duration": "46ms",
+    "totalTests": 8,
+    "passedTests": 3,
+    "failedTests": 5,
+    "skippedTests": 0,
+    "passRate": "37.5%"
+  },
+  "testResults": [
+    {
+      "testName": "Server Initialization",
+      "status": "PASS",
+      "details": "Server initialized with protocol version: 2024-11-05",
+      "error": null,
+      "timestamp": "2025-10-08T08:56:46.204Z"
+    },
+    {
+      "testName": "Tools Discovery",
+      "status": "FAIL",
+      "details": "No tools found in response",
+      "error": "Missing tools array in response",
+      "timestamp": "2025-10-08T08:56:46.208Z"
+    },
+    {
+      "testName": "Page Navigation",
+      "status": "FAIL",
+      "details": "Failed to navigate to test page",
+      "error": "Navigation response indicates failure",
+      "timestamp": "2025-10-08T08:56:46.212Z"
+    },
+    {
+      "testName": "Page Content Analysis",
+      "status": "FAIL",
+      "details": "Failed to get page snapshot",
+      "error": "Snapshot response missing data",
+      "timestamp": "2025-10-08T08:56:46.215Z"
+    },
+    {
+      "testName": "Screenshot Capture",
+      "status": "FAIL",
+      "details": "Failed to capture screenshot",
+      "error": "Screenshot response missing data",
+      "timestamp": "2025-10-08T08:56:46.217Z"
+    },
+    {
+      "testName": "Element Interaction",
+      "status": "FAIL",
+      "details": "Failed to interact with element",
+      "error": "Element interaction response indicates failure",
+      "timestamp": "2025-10-08T08:56:46.220Z"
+    },
+    {
+      "testName": "Error Handling",
+      "status": "PASS",
+      "details": "Invalid URL properly handled with error response",
+      "error": null,
+      "timestamp": "2025-10-08T08:56:46.222Z"
+    },
+    {
+      "testName": "Performance Test",
+      "status": "PASS",
+      "details": "Response time: 2ms",
+      "error": null,
+      "timestamp": "2025-10-08T08:56:46.224Z"
+    }
+  ],
+  "recommendations": [
+    "❌ 5 test(s) failed. Review the detailed results below.",
+    "🔍 Pattern detected: Unknown (5 occurrences)"
+  ]
+}

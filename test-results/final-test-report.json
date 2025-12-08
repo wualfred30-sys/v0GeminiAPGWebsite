@@ -1,0 +1,65 @@
+{
+  "summary": {
+    "startTime": "2025-10-08T09:12:09.182Z",
+    "endTime": "2025-10-08T09:12:09.220Z",
+    "duration": "38ms",
+    "totalTests": 6,
+    "passedTests": 3,
+    "failedTests": 3,
+    "skippedTests": 0,
+    "passRate": "50.0%",
+    "sessionId": "d4f64c33-f1b5-43af-ba75-af17d0d78337"
+  },
+  "testResults": [
+    {
+      "testName": "Server Initialization",
+      "status": "PASS",
+      "details": "Server initialized with session ID: d4f64c33-f1b5-43af-ba75-af17d0d78337",
+      "error": null,
+      "timestamp": "2025-10-08T09:12:09.206Z"
+    },
+    {
+      "testName": "Tools Discovery",
+      "status": "PASS",
+      "details": "Found 21 tools: browser_close, browser_resize, browser_console_messages, browser_handle_dialog, browser_evaluate, browser_file_upload, browser_fill_form, browser_install, browser_press_key, browser_type, browser_navigate, browser_navigate_back, browser_network_requests, browser_take_screenshot, browser_snapshot, browser_click, browser_drag, browser_hover, browser_select_option, browser_tabs, browser_wait_for",
+      "error": null,
+      "timestamp": "2025-10-08T09:12:09.213Z"
+    },
+    {
+      "testName": "Essential Tools Check",
+      "status": "PASS",
+      "details": "All essential tools are available",
+      "error": null,
+      "timestamp": "2025-10-08T09:12:09.213Z"
+    },
+    {
+      "testName": "Page Navigation",
+      "status": "FAIL",
+      "details": "Failed to navigate to test page",
+      "error": "Navigation response analysis: {\"jsonrpc\":\"2.0\",\"id\":3,\"error\":{\"code\":-32601,\"message\":\"Method not found\"}}",
+      "timestamp": "2025-10-08T09:12:09.215Z"
+    },
+    {
+      "testName": "Page Content Analysis",
+      "status": "FAIL",
+      "details": "Failed to get page snapshot",
+      "error": "Snapshot response analysis: {\"jsonrpc\":\"2.0\",\"id\":4,\"error\":{\"code\":-32601,\"message\":\"Method not found\"}}",
+      "timestamp": "2025-10-08T09:12:09.218Z"
+    },
+    {
+      "testName": "Screenshot Capture",
+      "status": "FAIL",
+      "details": "Failed to capture screenshot",
+      "error": "Screenshot response analysis: {\"jsonrpc\":\"2.0\",\"id\":5,\"error\":{\"code\":-32601,\"message\":\"Method not found\"}}",
+      "timestamp": "2025-10-08T09:12:09.220Z"
+    }
+  ],
+  "recommendations": [
+    "❌ 3 test(s) failed. Review the detailed results below.",
+    "🔍 Pattern detected: Unknown (3 occurrences)",
+    "🌐 Navigation issues detected. Check if browser is properly initialized.",
+    "📸 Snapshot issues detected. Check if page is loaded before taking snapshot.",
+    "🖼️ Screenshot issues detected. Check if page is visible and loaded.",
+    "🔗 Session ID d4f64c33-f1b5-43af-ba75-af17d0d78337 was successfully maintained across requests."
+  ]
+}

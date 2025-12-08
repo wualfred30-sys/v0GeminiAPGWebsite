@@ -21,8 +21,7 @@ export function Navigation() {
 
   return (
     <nav
-      className="fixed top-10 left-0 right-0 z-50 mx-auto max-w-7xl"
-      style={{ backgroundColor: "rgba(33, 42, 54, 0.85)", backdropFilter: "blur(6px)" }}
+      className="fixed top-10 left-0 right-0 z-50 mx-auto max-w-7xl bg-[rgba(33,42,54,0.85)] backdrop-blur-sm"
     >
       {/* Main navigation */}
       <div className="px-4 sm:px-6 lg:px-8 py-0">
@@ -63,7 +62,14 @@ export function Navigation() {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle navigation menu"
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
+            >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
@@ -72,7 +78,7 @@ export function Navigation() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden border-t border-white/20" style={{ backgroundColor: "#212A36" }}>
+        <div id="mobile-menu" className="md:hidden border-t border-white/20 bg-[#212A36]">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navItems.map((item) => (
               <Link

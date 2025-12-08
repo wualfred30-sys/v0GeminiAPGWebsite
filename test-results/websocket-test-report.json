@@ -1,0 +1,28 @@
+{
+  "summary": {
+    "startTime": "2025-10-08T09:19:43.948Z",
+    "endTime": "2025-10-08T09:19:43.970Z",
+    "duration": "22ms",
+    "totalTests": 1,
+    "passedTests": 0,
+    "failedTests": 1,
+    "skippedTests": 0,
+    "passRate": "0.0%",
+    "transport": "WebSocket"
+  },
+  "testResults": [
+    {
+      "testName": "Test Suite Execution",
+      "status": "FAIL",
+      "details": "Test suite execution failed",
+      "error": "Unexpected server response: 400",
+      "timestamp": "2025-10-08T09:19:43.970Z"
+    }
+  ],
+  "recommendations": [
+    "❌ 1 test(s) failed. Review the detailed results below.",
+    "🔍 Pattern detected: Unknown (1 occurrences)",
+    "🌐 WebSocket transport is recommended for full browser automation capabilities.",
+    "⚡ WebSocket provides real-time bidirectional communication with the MCP server."
+  ]
+}

@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Plane, Clock, Shield, Wrench, Award } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 const aircraft = [
   {
@@ -163,15 +164,16 @@ export default function FleetPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-12">
-            {aircraft.map((plane, index) => (
+            {aircraft.map((plane) => (
               <Card key={plane.id} className="overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                   {/* Aircraft Image */}
                   <div className="relative h-64 lg:h-auto">
-                    <img
+                    <Image
                       src={plane.image || "/placeholder.svg"}
                       alt={plane.name}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                     <div className="absolute top-4 left-4">
                       <Badge className="bg-primary text-primary-foreground">{plane.quantity} Aircraft Available</Badge>

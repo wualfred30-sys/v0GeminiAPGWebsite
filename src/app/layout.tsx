@@ -7,12 +7,16 @@ import { Footer } from "@/components/footer"
 
 const inter = Inter({
   subsets: ["latin"],
+  weight: ['400', '500', '600', '700'],
   variable: "--font-sans",
+  display: 'swap',
 })
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
+  weight: ['400', '700'],
   variable: "--font-serif",
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -30,8 +34,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} antialiased`}>
-      <body className="min-h-screen bg-background font-sans pt-10">
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+      <body className="min-h-screen bg-background font-sans antialiased">
         <Navigation />
         <main>{children}</main>
         <Footer />

@@ -115,8 +115,8 @@ interface ApplicationTrackerProps {
   applicationId?: string
 }
 
-export function ApplicationTracker({ currentStep = 1, applicationId = "APG-2025-001234" }: ApplicationTrackerProps) {
-  const [steps, setSteps] = useState(applicationSteps)
+export function ApplicationTracker({ applicationId = "APG-2025-001234" }: ApplicationTrackerProps) {
+  const [steps] = useState(applicationSteps)
 
   const completedSteps = steps.filter((step) => step.status === "completed").length
   const totalSteps = steps.length

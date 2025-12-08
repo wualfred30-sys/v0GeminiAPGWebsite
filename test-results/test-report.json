@@ -1,0 +1,60 @@
+{
+  "summary": {
+    "startTime": "2025-10-08T22:43:17.274Z",
+    "endTime": "2025-10-08T22:43:17.325Z",
+    "duration": "51ms",
+    "totalTests": 6,
+    "passedTests": 3,
+    "failedTests": 3,
+    "skippedTests": 0,
+    "passRate": "50.0%"
+  },
+  "testResults": [
+    {
+      "testName": "Server Connectivity",
+      "status": "PASS",
+      "details": "Server responds correctly, protocol version: 2024-11-05",
+      "error": null,
+      "timestamp": "2025-10-08T22:43:17.310Z"
+    },
+    {
+      "testName": "Tools Discovery",
+      "status": "FAIL",
+      "details": "No tools found in response",
+      "error": "Missing tools array in response",
+      "timestamp": "2025-10-08T22:43:17.315Z"
+    },
+    {
+      "testName": "Browser Initialization",
+      "status": "FAIL",
+      "details": "Failed to create browser context",
+      "error": "Missing contextId in response",
+      "timestamp": "2025-10-08T22:43:17.318Z"
+    },
+    {
+      "testName": "Port Conflict Scenario",
+      "status": "PASS",
+      "details": "No port conflict detected (expected behavior)",
+      "error": null,
+      "timestamp": "2025-10-08T22:43:17.320Z"
+    },
+    {
+      "testName": "Invalid JSON-RPC Handling",
+      "status": "FAIL",
+      "details": "Server should have rejected invalid method",
+      "error": null,
+      "timestamp": "2025-10-08T22:43:17.322Z"
+    },
+    {
+      "testName": "Performance - Response Time",
+      "status": "PASS",
+      "details": "Response time: 2ms",
+      "error": null,
+      "timestamp": "2025-10-08T22:43:17.324Z"
+    }
+  ],
+  "recommendations": [
+    "❌ 3 test(s) failed. Review the detailed results below.",
+    "🔍 Pattern detected: Unknown (3 occurrences)"
+  ]
+}
