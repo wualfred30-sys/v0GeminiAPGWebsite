@@ -54,7 +54,7 @@ const config = {
           '5': 'hsl(var(--chart-5))'
         },
         'aviation-red': '#E53935',
-        'slate-navy': '#0F172A',
+        'slate-navy': '#212A36',
         'accent-gold': '#D97706',
         'sky-light': '#F8FAFC',
         'runway-gray': '#1E293B',

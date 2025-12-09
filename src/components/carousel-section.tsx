@@ -28,6 +28,20 @@ const getCardIcon = (type: CardType): LucideIcon => {
 }
 
 export default function CarouselSection() {
+  type EmblaPlugin = NonNullable<Parameters<typeof useEmblaCarousel>[1]>[number]
+
+  const autoScrollPlugin = React.useMemo(
+    () =>
+      AutoScroll({
+        playOnInit: true,
+        speed: 1,
+        direction: 'backward', // ← LEFT TO RIGHT scroll
+        stopOnMouseEnter: true,
+        stopOnInteraction: false,
+      }) as unknown as EmblaPlugin,
+    []
+  )
+
   // ✅ Embla with AutoScroll - LEFT TO RIGHT direction
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
@@ -36,15 +50,7 @@ export default function CarouselSection() {
       dragFree: true,
       containScroll: false,
     },
-    [
-      AutoScroll({ 
-        playOnInit: true,
-        speed: 1,
-        direction: 'backward',  // ← LEFT TO RIGHT scroll
-        stopOnMouseEnter: true,
-        stopOnInteraction: false,
-      })
-    ]
+    [autoScrollPlugin]
   )
 
   const [selectedIndex, setSelectedIndex] = React.useState(0)
@@ -62,8 +68,8 @@ export default function CarouselSection() {
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) {
-      const autoScrollPlugin = emblaApi.plugins()?.autoScroll
-      if (autoScrollPlugin) autoScrollPlugin.stop()
+      const autoScrollPlugin = emblaApi.plugins()?.autoScroll as { stop?: () => void } | undefined
+      autoScrollPlugin?.stop?.()
     }
 
     return () => {

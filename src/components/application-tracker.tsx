@@ -4,7 +4,6 @@ import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
 import { Check, Clock, AlertCircle, Calendar, FileText, User, Phone } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -188,7 +187,14 @@ export function ApplicationTracker({ applicationId = "APG-2025-001234" }: Applic
               <span className="text-muted-foreground">Overall Progress</span>
               <span className="font-medium text-foreground">{Math.round(progressPercentage)}%</span>
             </div>
-            <Progress value={progressPercentage} className="h-3" />
+            <progress
+              value={completedSteps}
+              max={totalSteps}
+              aria-valuenow={completedSteps}
+              aria-valuemin={0}
+              aria-valuemax={totalSteps}
+              className="h-3 w-full overflow-hidden rounded-full bg-muted [&::-webkit-progress-bar]:bg-muted [&::-webkit-progress-value]:bg-aviation-red [&::-moz-progress-bar]:bg-aviation-red"
+            />
             <p className="text-sm text-muted-foreground">
               {completedSteps === totalSteps
                 ? "Congratulations! Your application is complete. Welcome to APG International!"

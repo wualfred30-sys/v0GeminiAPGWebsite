@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Star, Quote, Plane, Award, Users } from "lucide-react"
 import Link from "next/link"
 
@@ -85,6 +84,15 @@ const testimonials = [
     highlights: ["International focus", "Language training", "Long-term success"],
   },
 ]
+
+const getInitials = (name: string) =>
+  name
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase()
 
 const successStats = [
   {
@@ -172,15 +180,9 @@ export default function TestimonialsPage() {
               <Card key={testimonial.id} className="hover:shadow-lg transition-shadow">
                 <CardHeader className="pb-4">
                   <div className="flex items-start gap-4">
-                    <Avatar className="w-16 h-16">
-                      <AvatarImage src={testimonial.image || "/placeholder.svg"} alt={testimonial.name} />
-                      <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                        {testimonial.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </AvatarFallback>
-                    </Avatar>
+                    <div className="w-16 h-16 rounded-full border border-border bg-primary/5 flex items-center justify-center text-lg font-semibold text-primary shadow-sm">
+                      {getInitials(testimonial.name)}
+                    </div>
                     <div className="flex-1">
                       <CardTitle className="text-lg font-bold text-foreground">{testimonial.name}</CardTitle>
                       <CardDescription className="text-primary font-medium">{testimonial.position}</CardDescription>
