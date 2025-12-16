@@ -49,6 +49,11 @@
   --runway-gray: #1e293b;
   --alt-muted: #64748b;
 
+  /* Beige Theme Colors */
+  --beige-tan: #f5f5dc;
+  --beige-tan-dark: #e8e5d0;
+  --beige-tan-light: #faf8f0;
+
   --gradient-hero: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.82) 52%, rgba(229, 57, 53, 0.68) 100%);
   --diagonal-angle: 6deg;
 }
@@ -77,6 +82,17 @@
      transform: skewY(calc(var(--diagonal-angle, 6deg) * -1));
      transform-origin: top left;
      background: linear-gradient(135deg, rgba(229, 57, 53, 0.14), rgba(30, 41, 59, 0.32));
+     pointer-events: none;
+     z-index: -1;
+   }
+
+   .before-diagonal-beige::before {
+     content: "";
+     position: absolute;
+     inset: 0;
+     transform: skewY(calc(var(--diagonal-angle, 6deg) * -1));
+     transform-origin: top left;
+     background: linear-gradient(135deg, rgba(245, 245, 220, 0.4), rgba(232, 229, 208, 0.3));
      pointer-events: none;
      z-index: -1;
    }

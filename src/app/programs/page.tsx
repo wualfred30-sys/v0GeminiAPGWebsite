@@ -1,4 +1,3 @@
-import Image from "next/image"
 import {
   Award,
   Calendar,
@@ -148,16 +147,8 @@ export default function ProgramsPage() {
           variant: "outline",
           icon: <Download className="size-4" />,
         }}
-        media={
-          <Image
-            src="/success-track-record.avif"
-            alt="ATP fleet ready for departure"
-            width={520}
-            height={380}
-            className="h-full w-full rounded-3xl object-cover"
-            priority
-          />
-        }
+        backgroundImage="/FINAL DESIGN FINAL COPY.png"
+        backgroundStyle="fullWidth"
       >
         <ul className="grid gap-3 text-left text-sm text-sky-light/85 sm:grid-cols-2">
           {[
