@@ -214,6 +214,25 @@ None - This is a new feature release building on top of the existing CRM.
 - Minimal loader and reduced animations
 - Dark theme with slate/black gradient background
 
+## Version 2.0.1 - December 2025
+
+### UI Improvements
+
+#### 🎨 Hero Banner Enhancement
+- **Completely removed overlay from Programs hero banner** for full image visibility
+- Removed `bg-beige-tan` and `before-diagonal-beige` classes from `AngledHero` component when `backgroundStyle="fullWidth"`
+- The "FINAL DESIGN FINAL COPY.png" banner image now displays with 100% saturation and no beige tinting
+- **Added responsive top padding** to Programs page with grain brown (#e4ceb6) spacer div
+- Improves visual impact of aircraft and cloud elements in the hero background
+- Creates proper spacing between fixed header and hero content
+
+### Technical Details
+- **Modified `src/components/angled-hero.tsx`**: Removed `bg-beige-tan text-slate-navy before-diagonal-beige` classes, keeping only `text-slate-navy`
+- **Modified `src/app/programs/page.tsx`**: Added `<div className="h-24 md:h-32 lg:h-40 w-full bg-[#e4ceb6]" />` before `<AngledHero>`
+- Changes affect only fullWidth hero sections (used on Programs page)
+- Contained hero sections remain unchanged
+- Top padding is responsive across mobile (h-24), tablet (h-32), and desktop (h-40) breakpoints
+
 ### Next Steps
 
 For production readiness:

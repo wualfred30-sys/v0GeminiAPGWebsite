@@ -55,7 +55,7 @@ export function AngledHero({
       className={cn(
         "relative isolate overflow-hidden rounded-b-[2.5rem] py-16 shadow-card-soft",
         "mask-angled",
-        isFullWidth ? "bg-beige-tan text-slate-navy before-diagonal-beige" : "bg-slate-navy/95 text-sky-light before-diagonal",
+        isFullWidth ? "text-slate-navy" : "bg-slate-navy/95 text-sky-light before-diagonal",
         className,
       )}
     >
@@ -77,7 +77,7 @@ export function AngledHero({
         className={cn(
           "absolute inset-0 z-0",
           isFullWidth 
-            ? "bg-gradient-to-r from-[#f5f5dc]/60 via-[#f5f5dc]/50 to-[#f5f5dc]/40" 
+            ? "bg-transparent" 
             : "bg-gradient-to-r from-slate-navy/85 via-slate-navy/78 to-aviation-red/65"
         )} 
       />

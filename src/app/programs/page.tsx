@@ -26,7 +26,7 @@ const programs = [
     outcome:
       "Graduate ready for personal flying and foundation for commercial training",
     description:
-      "Begin your aviation journey with comprehensive training that covers every phase of private flight. Build disciplined fundamentals, gain confidence in single-engine aircraft, and prepare for the next stages of your professional career.",
+      "Begin your aviation journey with comprehensive training that covers every phase of private flight. Build disciplined fundamentals, gain confidence in single-engine aircraft, and prepare for next stages of your professional career.",
     requirements: [
       "Minimum age: 17 years old",
       "High school diploma or equivalent",
@@ -129,6 +129,7 @@ const programs = [
 export default function ProgramsPage() {
   return (
     <div className="space-y-16 pb-24">
+      <div className="h-24 md:h-32 lg:h-40 w-full bg-[#e4ceb6]" />
       <AngledHero
         eyebrow={{
           label: "CAAP CERTIFIED PROGRAMS",
@@ -167,12 +168,12 @@ export default function ProgramsPage() {
 
       <section id="programs" className="mx-auto w-full max-w-6xl px-6 sm:px-8">
         <Tabs defaultValue="ppl" className="w-full space-y-12">
-          <TabsList className="grid w-full grid-cols-1 gap-3 rounded-2xl bg-slate-navy/80 p-2 sm:grid-cols-3">
+          <TabsList className="w-full flex flex-col sm:flex-row gap-1 rounded-full bg-gradient-to-r from-orange-500/90 to-red-500/90 p-1.5 shadow-lg">
             {programs.map((program) => (
               <TabsTrigger
                 key={program.id}
                 value={program.id}
-                className="rounded-xl bg-transparent text-sm font-medium text-white data-[state=active]:bg-white/15 data-[state=active]:shadow-card-soft"
+                className="w-full flex-1 rounded-2xl bg-transparent text-sm font-medium text-slate-navy uppercase tracking-wide transition-all duration-300 data-[state=active]:bg-white/20 data-[state=active]:text-slate-navy data-[state=active]:shadow-md"
               >
                 {program.title.split("(")[0].trim()}
               </TabsTrigger>
@@ -208,11 +209,30 @@ export default function ProgramsPage() {
                 <DiagonalCard
                   title={program.title}
                   eyebrow={program.subtitle}
-                  icon={<Award className="size-5 text-aviation-red" />}
+                  icon={<Plane className="size-5 text-orange-500 -rotate-[15deg]" />}
                   accent="primary"
                   className="relative"
                 >
-                  <div className="grid gap-8 lg:grid-cols-[minmax(0,2.1fr)_minmax(0,1fr)]">
+                  <svg 
+                    className="absolute top-6 right-8 w-24 h-12 opacity-20" 
+                    viewBox="0 0 96 48" 
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <rect x="0" y="8" width="3" height="32" fill="currentColor" className="text-black" />
+                    <rect x="8" y="8" width="2" height="32" fill="currentColor" className="text-black" />
+                    <rect x="14" y="8" width="4" height="32" fill="currentColor" className="text-black" />
+                    <rect x="22" y="8" width="2" height="32" fill="currentColor" className="text-black" />
+                    <rect x="28" y="8" width="5" height="32" fill="currentColor" className="text-black" />
+                    <rect x="37" y="8" width="3" height="32" fill="currentColor" className="text-black" />
+                    <rect x="44" y="8" width="2" height="32" fill="currentColor" className="text-black" />
+                    <rect x="50" y="8" width="4" height="32" fill="currentColor" className="text-black" />
+                    <rect x="58" y="8" width="3" height="32" fill="currentColor" className="text-black" />
+                    <rect x="65" y="8" width="2" height="32" fill="currentColor" className="text-black" />
+                    <rect x="71" y="8" width="5" height="32" fill="currentColor" className="text-black" />
+                    <rect x="80" y="8" width="3" height="32" fill="currentColor" className="text-black" />
+                  </svg>
+                  <div className="grid gap-8 lg:grid-cols-[2fr_1fr]">
                     <div className="space-y-6">
                       <p className="text-base leading-relaxed text-sky-light/90">{program.description}</p>
 
