@@ -7,20 +7,15 @@
     npm install
     ```
 
-3.  **Environment Variables**:
-    Copy `.env.example` to `.env.local` and fill in real values, or ask the team for keys.
-    Required variables:
-    - `NEXT_PUBLIC_FIREBASE_API_KEY`
-    - `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
-    - `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
-    - ... (see README.md)
+**Environment Variables**:
+No environment variables are required for local development. The site runs as a standard Next.js application.
 
 ## Running Locally
 
 ```bash
 npm run dev
 ```
-Runs the custom server (Next.js + Socket.IO) on `http://localhost:3000`.
+Runs on `http://localhost:3000`.
 
 ## Building
 
@@ -31,6 +26,8 @@ npm run start
 
 ## Architecture Notes
 
-- **Next.js**: Handle routing and UI.
-- **Custom Server (`server.ts`)**: Initializes Socket.IO and delegates HTTP requests to Next.js.
-- **Firebase**: Used for Auth and Firestore. Initialize in `src/lib/firebase.ts`.
+- **Next.js**: Handles routing, SSR, and UI rendering
+- **React**: Component-based UI library
+- **Tailwind CSS**: Utility-first styling
+- **Embla Carousel**: Smooth, performant carousels
+- **shadcn/ui**: Accessible component primitives

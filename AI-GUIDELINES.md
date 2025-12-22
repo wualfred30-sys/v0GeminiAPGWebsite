@@ -181,12 +181,9 @@ embla-carousel-auto-scroll: Continuous scroll (Chronicle HQ style)
 Icons
 Lucide React: Primary icon library
 Phosphor Icons: Secondary (experimental)
-Backend/Real-time
-Socket.io: WebSocket support (for future features)
-Custom Next.js server: server.ts with Socket.io integration
-Database (Planned)
-Vercel Postgres or Vercel KV: Database solution
-Currently: Frontend-only, no backend features yet
+**Backend Features**:
+Currently: Frontend-only static site with no backend services
+Future: May add API routes or database as needed
 File Structure
 /home/user/GeminiAPGWEBSITE1/
 ├── src/
@@ -202,15 +199,12 @@ File Structure
 │   ├── data/                  # Static data files
 │   │   └── carousel-cards.ts
 │   ├── lib/                   # Utilities
-│   │   ├── utils.ts
-│   │   ├── firebase.ts
-│   │   └── socket.ts
+│   │   └── utils.ts
 │   └── hooks/                 # Custom React hooks
 ├── public/                    # Static assets
 │   ├── apg-aircraft-fleet.avif
 │   └── success-track-record.avif
 ├── docs/                      # Documentation
-├── server.ts                  # Custom Next.js server
 ├── tailwind.config.ts         # Tailwind configuration
 └── AI-GUIDELINES.md          # This file
 Key Dependencies
@@ -221,9 +215,7 @@ Key Dependencies
   "tailwindcss": "^3.4.17",
   "embla-carousel-react": "^8.5.1",
   "embla-carousel-auto-scroll": "^8.6.0",
-  "lucide-react": "^0.468.0",
-  "socket.io": "^4.8.1",
-  "socket.io-client": "^4.8.1"
+  "lucide-react": "^0.468.0"
 }
 ```
 ## 🔒 Code Standards & Security
@@ -289,27 +281,11 @@ Push to GitHub: Code changes trigger automatic deployment
 Vercel builds: Runs npm run build
 Preview deployments: Every PR gets a unique URL
 Production: Merges to main branch deploy to production
-Environment Variables
-File: .env.local (local development, not committed)
+### Environment Variables
 
-Required Variables (when backend is added):
+**Current Status**: No environment variables required
 
-```bash
-# Database
-DATABASE_URL=
-POSTGRES_URL=
-# Firebase (if used)
-NEXT_PUBLIC_FIREBASE_API_KEY=
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=
-# Socket.io (if needed in production)
-SOCKET_URL=
-```
-Vercel Setup:
-
-Go to Vercel Dashboard → Project Settings → Environment Variables
-Add all required variables
-Redeploy to apply changes
+The application runs as a static Next.js site with no backend dependencies. If future features require environment variables (API keys, database URLs), they will be documented here.
 Build Configuration
 File: next.config.mjs
 
