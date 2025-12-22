@@ -95,7 +95,7 @@ export function Footer() {
             </p>
             <div className="space-y-2">
               <Input placeholder="Enter your email" type="email" />
-              <Button className="w-full btn-aviation-secondary">Subscribe</Button>
+              <Button className="w-full bg-[#E53935] hover:bg-[#C62828] text-white font-semibold">Subscribe</Button>
             </div>
             <div className="flex space-x-4">
               <Button variant="ghost" size="icon">
