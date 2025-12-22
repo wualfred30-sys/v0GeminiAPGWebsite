@@ -376,26 +376,13 @@ Server won't start
 "EADDRINUSE" error
 Solution:
 
+The app uses the standard Next.js dev server. If port 3000 is in use, you can kill the process or run on a different port.
+
 ```bash
 # Kill process using port 3000
 kill -9 $(lsof -ti:3000)
 # Then restart
 npm run dev
-```
-Prevention: Add auto-kill to server.ts:
-
-```typescript
-async function killPortProcess(port: number) {
-  try {
-    const { stdout } = await execAsync(`lsof -ti:${port}`);
-    if (stdout.trim()) {
-      await execAsync(`kill -9 ${stdout.trim()}`);
-      await new Promise(resolve => setTimeout(resolve, 1000));
-    }
-  } catch (error) {
-    // Port is free
-  }
-}
 ```
 Problem: Embla Carousel Plugin Not Working
 Symptoms:
@@ -557,7 +544,7 @@ Next.js 14 with App Router
 Tailwind CSS for styling
 TypeScript for type safety
 Embla Carousel with auto-scroll plugin
-Custom Next.js server with Socket.io (for future features)
+Standard Next.js dev server
 Vercel for deployment
 ## 🎯 Quick Reference
 Colors

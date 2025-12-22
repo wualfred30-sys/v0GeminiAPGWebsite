@@ -7,7 +7,7 @@ This is a static Next.js application with no backend services. No secrets or env
 ### Common Tasks
 
 #### Monitoring Application Health
-Check the `/api/health` endpoint to verify the application is running.
+Verify the application is running by loading the homepage or checking the Vercel deployment status. You can also use the `/api/health` endpoint.
 
 #### Updating Content
 Content is managed by updating React components in `src/app` and `src/components`.
