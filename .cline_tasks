@@ -1,0 +1,3 @@
+- [ ] Fix Tailwind Configuration (Import and add `tailwindcss-animate`)
+- [ ] Remove Unused Geist Font Dependency from `package.json` and run `npm install`
+- [ ] Document v0 Environment Variables in `README.md`
